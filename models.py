@@ -44,3 +44,30 @@ def s_alpha(alpha,lamb,gamma,s,i,r):
     r_3_p = gamma[2]*i_3 + alpha[1]*r_2 - alpha[2]*r_3
     state = np.array([s_1_p,s_2_p,s_3_p,i_1_p,i_2_p,i_3_p,r_1_p,r_2_p,r_3_p])
     return state
+
+
+def s_alpha_SSPE(alpha,lamb,gamma,p,s,i,r,B):
+    """S compartment with age transfer alpha and infection transfer lambda
+    s (2,)     : s[0] first age group s[1] second age group
+    alpha (n,) : transfer rate from s_1 to s_2
+    lamb (n+1,): infection rate for s_1 and s_2
+    p    (n,)  : rate SSPE for population r_1 and r_2"""
+
+    s_1 = s[0]
+    s_2 = s[1]
+    s_1_p = -(alpha[0]+lamb[0])*s_1
+    s_2_p =  alpha[0]*s_1-lamb[1]*s_2 #-alpha[1]*s_2 can use as death rate
+    i_1 = i[0]
+    i_2 = i[1]
+    i_1_p = lamb[0]*s_1 - gamma[0]*i_1 -alpha[0]*i_1
+    i_2_p = lamb[1]*s_2 - gamma[1]*i_2 + alpha[0]*i_1 #- alpha[1]*i_2 can use as death rate
+    r_1 = r[0]
+    r_2 = r[1] 
+    B_1 = B[0]
+    B_2 = B[1]
+    r_1_p = gamma[0]*i_1 - alpha[0]*r_1  - p[0]*r_1
+    r_2_p = gamma[1]*i_2 + alpha[0]*r_1 - p[1]*r_2 #- alpha[1]*r_2  can use as death rate
+    B_1_p = p[0]*r_1
+    B_2_p = p[1]*r_2
+    state = np.array([s_1_p,s_2_p,i_1_p,i_2_p,r_1_p,r_2_p,B_1_p,B_2_p])
+    return state
