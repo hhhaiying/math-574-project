@@ -4,7 +4,7 @@ from models import s_alpha_SSPEV
 
 
 def taylor_system_12(f,initial,alpha,lamb,gamma,p,nu,t0,t1,n):
-    """Naive 2 S compartment connection. Forward 2nd order. SSPE leaks at proportion p : (2,)"""
+    """2 SIR compartment connection. Forward 2nd order. SSPE leaks at proportion p : (2,) Vaccine rate nu : (2,)"""
     t = t0
     h = (t1 - t0) / n
     points = np.zeros([10,n])
