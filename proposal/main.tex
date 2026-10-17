@@ -9,22 +9,20 @@
 \begin{eqnarray*}
   S_1^{\prime}&=& b - \lambda_{11} S_1I_1 - \lambda_{12}S_1I_2-\alpha S_1 \\
   I_1^{\prime}&=&  \lambda_{11} S_1I_1 + \lambda_{12}S_1 I_2 - \gamma_1 I_1\\
-  R_1^{\prime}&=& \gamma_1 I_1 - p_1 R_1\\
-  B_1^{\prime}&=& p_1 R_1\\
-  S_2^{\prime}&=&-\lambda_{21} S_2I_1 -\lambda_{22} S_2 I_2 + \alpha S_1 - \nu S_2 \\
+  R_1^{\prime}&=& \gamma_1 I_1 - (\delta_1+b) R_1\\
+  S_2^{\prime}&=&-\lambda_{21} S_2I_1 -\lambda_{22} S_2 I_2 + \alpha S_1 - (\nu+b) S_2 \\
   I_2^{\prime}&=&\lambda_{21} S_2I_1 + \lambda_{22} S_2 I_2 - \gamma_2 I_2\\
-  R_2^{\prime}&=& \gamma_2 I_2 - p_2 R_2\\
-  B_2^{\prime}&=& p_2 R_2\\
-  V^{\prime} &=& \nu S_2
+  R_2^{\prime}&=& \gamma_2 I_2 - (\delta_2+b) R_2\\
+  B^{\prime}&=& \delta_1 R_1 + \delta_2 R_2\\
 \end{eqnarray*}
 
 Where 
 \begin{enumerate}[label=(\alph*)]
-  \item $b$ is birth rate
+  \item $b$ is birth/death rate
   \item $\alpha$ is the aging rate from population 1 to 2
-  \item $\lambda_{ij},~~i,j=1,2$ are the contact infection contact parameters for populations $i$ and $j$.
-  \item $\gamma_i,~~i=1,2$ is the recovery rate for population $i$.
-  \item $p_i,~~i=1,2$ is the rate of recovered population $i$ that develops SSPE.
+  \item $\lambda_{ij},~~i,j=1,2$ are the contact infection contact parameters for populations $i$ and $j$
+  \item $\gamma_i,~~i=1,2$ is the recovery rate for population $i$
+  \item $\delta_i,~~i=1,2$ is the rate of recovered population $i$ that develops SSPE
   \item $\nu$ is the vaccination rate for population $S_2$
 \end{enumerate}
 
