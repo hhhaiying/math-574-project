@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from models import SSPEV
+from model import SSPEV
 
 
-def taylor_system_13(f,initial,b,alpha,lamb,gamma,p,nu,t0,t1,n):
+def taylor_system_13(f,initial,t0,t1,n):
     """First order forward iteration"""
     t = t0
     h = (t1 - t0) / n
@@ -50,7 +50,7 @@ initial_i = np.array([0.25,0.])
 initial_r = np.zeros(2)
 initial_b = np.zeros(2)
 initial = np.column_stack([initial_s,initial_i,initial_r,initial_b])
-points = taylor_system_13(SSPEV,initial,b,alpha,lamb,gamma,delta,nu,0,10,100)
+points = taylor_system_13(SSPEV,initial,0,10,100)
 t = points[0,:]
 s_1 = points[1,:]
 s_2 = points[2,:]
@@ -60,6 +60,8 @@ r_1 = points[5,:]
 r_2 = points[6,:]
 b_1 = points[7,:]
 
+
+plt.figure(figsize=(13,8))
 plt.plot(t,s_1, label='Infants < 1')
 plt.plot(t,s_2, label='Everyone Else')
 plt.plot(t,i_1, label='Infected Infants < 1')
