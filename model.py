@@ -30,3 +30,11 @@ def SSPEV(b,alpha,lamb,gamma,delta,nu,s,i,r):
 
     state = np.array([s_1_p,s_2_p,i_1_p,i_2_p,r_1_p,r_2_p,b_0_p])
     return state
+
+def stability_system(b,d,beta,gamma,nu,s,i):
+    """
+    s,i system of reduced model
+    """
+    s_p = b*(1-s-i)-beta*i*s-nu*s
+    i_p = b*i*s - gamma*i
+    return s_p, i_p
