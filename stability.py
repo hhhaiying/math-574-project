@@ -15,10 +15,13 @@ def sys(t,v):
 
 R_0 = (beta/gamma)*(b/(b+nu))
 print(f"R_0 Value: {R_0}")
-
 J_P0 = np.array([
     [-b-nu,-b-(beta*b)/(b+gamma)],
     [0, (beta*b)/(b+gamma)-gamma]
+])
+
+P_0 = np.array([
+    b/(b+nu),0
 ])
 
 P_star = np.array([
@@ -26,7 +29,8 @@ P_star = np.array([
 ])
 
 rt = root(lambda v : stability_system(b,d,beta,gamma,nu,v[0],v[1]),x0=(0.5,0.5))
-
+print("Is the root near P_0?", np.allclose(rt.x,P_0))
+print("Is the root near P_star?",np.allclose(rt.x,P_star))
 points = np.linspace(0,1,10)
 ini = np.column_stack([np.cos((np.pi/2)*points),np.sin((np.pi/2)*points)])
 X,Y = np.meshgrid(points,points)
@@ -39,7 +43,7 @@ for y0 in ini:
     x,y = sol.y
     plt.plot(x,y)
 
-
+plt.plot(P_0[0],P_0[1],'o',label="Disease free")
 plt.plot(P_star[0],P_star[1],'o',label='Analytical Equilibrium')
 plt.plot(rt.x[0],rt.x[1],'o',label='Numerical Equilibrium')
 plt.title(f'Field for b={b} d={d} beta={beta} \n gamma={gamma} nu ={nu}')
