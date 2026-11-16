@@ -33,12 +33,12 @@ rt = root(lambda v : stability_system(b,d,beta,gamma,nu,v[0],v[1]),x0=(0.5,0.5))
 #print("Is the root near P_star?",np.allclose(rt.x,P_star))
 points = np.linspace(0,1,10)
 ini = np.column_stack([np.cos((np.pi/2)*points),np.sin((np.pi/2)*points)])
-fig, ax = plt.subplots(2)
+fig, ax = plt.subplots(2,figsize=(13,8))
 X,Y = np.meshgrid(points,points)
 U,V = stability_system(b,d,beta,gamma,nu,X,Y)
 L = np.hypot(U,V)
 L[L==0]=1
-ax[0].quiver(X,Y,U/L,V/L,angles='xy',units='xy',scale=30,width=0.01,headwidth=1,headlength=2)
+ax[0].quiver(X,Y,U/L,V/L,angles='xy',scale=30,width=0.003,headwidth=2,headlength=3)
 for y0 in ini:
     sol = solve_ivp(sys,(0,10),y0,t_eval=np.linspace(0,10))
     x,y = sol.y
@@ -78,7 +78,7 @@ X,Y = np.meshgrid(points,points)
 U,V = stability_system(b,d,beta,gamma,nu,X,Y)
 L = np.hypot(U,V)
 L[L==0]=1
-ax[1].quiver(X,Y,U/L,V/L,angles='xy',units='xy',scale=30,width=0.01,headwidth=1,headlength=2)
+ax[1].quiver(X,Y,U/L,V/L,angles='xy',scale=30,width=0.003,headwidth=2,headlength=3)
 for y0 in ini:
     sol = solve_ivp(sys,(0,10),y0,t_eval=np.linspace(0,10))
     x,y = sol.y
@@ -90,8 +90,8 @@ ax[1].set_title(rf'Field for $R_0$ = {np.round(R_0,2)} {'\n'} b={b} d={d} $\beta
 ax[1].set_xlabel('s')
 ax[1].set_ylabel('i')
 ax[1].legend()
-plt.tight_layout()
 plt.suptitle("Vector Fields for the Reduced System")
+plt.tight_layout()
 plt.savefig(f'figures/stability_field.jpg',dpi=200)
 plt.show()
 
