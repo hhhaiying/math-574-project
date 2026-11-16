@@ -14,7 +14,7 @@ def sys(t,v):
     return val
 
 R_0 = (beta/gamma)*(b/(b+nu))
-print(f"R_0 Value: {R_0}")
+#print(f"R_0 Value: {R_0}")
 J_P0 = np.array([
     [-b-nu,-b-(beta*b)/(b+gamma)],
     [0, (beta*b)/(b+gamma)-gamma]
@@ -38,7 +38,7 @@ X,Y = np.meshgrid(points,points)
 U,V = stability_system(b,d,beta,gamma,nu,X,Y)
 L = np.hypot(U,V)
 L[L==0]=1
-ax[0].quiver(X,Y,0.1*(U/L),0.1*(V/L))
+ax[0].quiver(X,Y,U/L,V/L,angles='xy',units='xy',scale=30,width=0.01,headwidth=1,headlength=2)
 for y0 in ini:
     sol = solve_ivp(sys,(0,10),y0,t_eval=np.linspace(0,10))
     x,y = sol.y
@@ -78,7 +78,7 @@ X,Y = np.meshgrid(points,points)
 U,V = stability_system(b,d,beta,gamma,nu,X,Y)
 L = np.hypot(U,V)
 L[L==0]=1
-ax[1].quiver(X,Y,0.1*(U/L),0.1*(V/L))
+ax[1].quiver(X,Y,U/L,V/L,angles='xy',units='xy',scale=30,width=0.01,headwidth=1,headlength=2)
 for y0 in ini:
     sol = solve_ivp(sys,(0,10),y0,t_eval=np.linspace(0,10))
     x,y = sol.y
@@ -91,5 +91,9 @@ ax[1].set_xlabel('s')
 ax[1].set_ylabel('i')
 ax[1].legend()
 plt.tight_layout()
+plt.suptitle("Vector Fields for the Reduced System")
 plt.savefig(f'figures/stability_field.jpg',dpi=200)
 plt.show()
+
+
+
