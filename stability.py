@@ -28,7 +28,7 @@ P_star = np.array([
 rt = root(lambda v : stability_system(b,d,beta,gamma,nu,v[0],v[1]),x0=(0.5,0.5))
 
 points = np.linspace(0,1,10)
-ini = np.column_stack([np.cos((np.pi/4)*points),np.sin((np.pi/4)*points)])
+ini = np.column_stack([np.cos((np.pi/2)*points),np.sin((np.pi/2)*points)])
 X,Y = np.meshgrid(points,points)
 U,V = stability_system(b,d,beta,gamma,nu,X,Y)
 L = np.hypot(U,V)
