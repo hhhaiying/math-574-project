@@ -36,5 +36,5 @@ def stability_system(b,d,beta,gamma,nu,s,i):
     s,i system of reduced model
     """
     s_p = b*(1-s-i)-beta*i*s-nu*s
-    i_p = b*i*s - gamma*i
+    i_p = beta*i*s - gamma*i
     return s_p, i_p
