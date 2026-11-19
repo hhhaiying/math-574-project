@@ -19,7 +19,7 @@ J_P0 = np.array([
     [-b-nu,-b-(beta*b)/(b+gamma)],
     [0, (beta*b)/(b+gamma)-gamma]
 ])
-
+print(np.linalg.norm(J_P0,2))
 P_0 = np.array([
     b/(b+nu),0
 ])
