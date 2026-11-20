@@ -47,9 +47,9 @@ gamma = np.array([1/8,1/8])
 #delta = np.random.uniform(0,0.05)
 delta = 1 / 1336
 delta = np.array([delta,0])
-nu = (1/365)*np.array([72,91])
+nu = (1/365)*np.array([.72,.91])
 pop_1,pop_2 = data_processing()
-vpop_1, vpop_2 = nu[0]*pop_1,nu[1]*pop_2
+vpop_1, vpop_2 = 0.72*pop_1,0.91*pop_2
 infpop_1, infpop_2 = give_I()
 suspop_1,suspop_2 = pop_1 -infpop_1-vpop_1, pop_2-infpop_2-vpop_2
 print(suspop_1,suspop_2)
@@ -59,7 +59,7 @@ initial_r = np.zeros(2)
 initial_b = np.zeros(2)
 initial_v = np.array([vpop_1,vpop_2])
 initial = np.column_stack([initial_s,initial_i,initial_r,initial_b,initial_v])
-points = taylor_system_14(SSPE,initial,0,24,240)
+points = taylor_system_14(SSPE,initial,0,60,360)
 t = points[0,:]
 s_1 = points[1,:]
 s_2 = points[2,:]
@@ -81,7 +81,7 @@ plt.plot(t,b_1, label='SSPE Incidence')
 #plt.plot(t,v_1, label='Vaccinated population')
 plt.xlabel('Time (days)')
 plt.ylabel('Percentage')
-plt.title(rf"First order approx {'\n'} $\beta$ = {beta} {'\n'} $\gamma$ = {gamma} {'\n'} sspe_rate = {np.round(delta[0],3)} Vaccination rate {nu}")
+plt.title(rf"First order approx {'\n'} $\beta$ = {beta} {'\n'} $\gamma$ = {gamma} {'\n'} sspe_rate = {np.round(delta[0],3)} Vaccination rate {np.round(nu,4)}/day")
 plt.grid()
 plt.legend()
 plt.tight_layout()
@@ -94,7 +94,7 @@ fig, ax = plt.subplots(2,2,figsize=(13,8))
 ax[0,0].plot(t,b_1, label='SSPE Incidence Children < 5')
 ax[0,0].set_xlabel('Time (days)')
 ax[0,0].set_ylabel('Percentage')
-ax[0,0].set_title(f"SSPE Incidence \n sspe_rate = {np.round(delta[0],3)} vaccination_rate {nu}")
+ax[0,0].set_title(f"SSPE Incidence \n sspe_rate = {np.round(delta[0],3)} vaccination_rate {np.round(nu,4)} / day")
 ax[0,0].grid()
 ax[0,0].legend()
 ax[0,1].plot(t,r_1, label='Recovered Children < 5')
