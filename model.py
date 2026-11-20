@@ -13,7 +13,7 @@ def SSPE(beta,gamma,delta,nu,s,i,r):
     alpha (2,) : Age rate from s_1 to s_2
     beta (4,) : Effective contact number between s_i*i_j
     gamma (2,) : Recovery rate 
-    nu    (1,) : Uniform Vaccination rate across both populations
+    nu    (2,) : Uniform Vaccination rate across both populations
     delta (2,) : SSPE incidence in population 1 and 2
     """
     
@@ -23,14 +23,14 @@ def SSPE(beta,gamma,delta,nu,s,i,r):
     i_2 = i[1]
     r_1 = r[0]
     r_2 = r[1] 
-    s_1_p = -(beta[0]*i_1+beta[1]*i_2)*s_1 - nu*s_1
-    s_2_p =  -beta[2]*s_2*i_1 - beta[3]*s_2*i_2 - nu*s_2
+    s_1_p = -(beta[0]*i_1+beta[1]*i_2)*s_1 - nu[0]*s_1
+    s_2_p =  -beta[2]*s_2*i_1 - beta[3]*s_2*i_2 - nu[1]*s_2
     i_1_p = (beta[0]*i_1+beta[1]*i_2)*s_1 - gamma[0]*i_1
     i_2_p = beta[2]*s_2*i_1 + beta[3]*s_2*i_2  - gamma[1]*i_2 
     r_1_p = gamma[0]*i_1  - delta[0]*r_1
     r_2_p = gamma[1]*i_2 
     b_0_p = delta[0]*r_1 
-    v_0_p = nu*s_1 + nu*s_2
+    v_0_p = nu[0]*s_1 + nu[1]*s_2
 
     state = np.array([s_1_p,s_2_p,i_1_p,i_2_p,r_1_p,r_2_p,b_0_p,v_0_p])
     return state

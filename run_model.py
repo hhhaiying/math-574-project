@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from model import SSPE
+from data_processing import data_processing,give_I
 
 
 def taylor_system_14(f,initial,t0,t1,n):
@@ -40,20 +41,25 @@ def taylor_system_14(f,initial,t0,t1,n):
     return points
 
 
-beta = np.array([[0.2,0.3],[0.3,0.2]])
+beta = np.array([[1.7280,6.686],[0.3688,9.9163]])
 beta = beta.flatten()
-gamma = np.array([0.8,0.8])
+gamma = np.array([1/8,1/8])
 #delta = np.random.uniform(0,0.05)
 delta = 1 / 1336
 delta = np.array([delta,0])
-nu = 0.4
-initial_s = np.array([0.25,0.5])
-initial_i = np.array([0.25,0.])
+nu = (1/365)*np.array([72,91])
+pop_1,pop_2 = data_processing()
+vpop_1, vpop_2 = nu[0]*pop_1,nu[1]*pop_2
+infpop_1, infpop_2 = give_I()
+suspop_1,suspop_2 = pop_1 -infpop_1-vpop_1, pop_2-infpop_2-vpop_2
+print(suspop_1,suspop_2)
+initial_s = np.array([suspop_1,suspop_2])
+initial_i = np.array([infpop_1,infpop_2])
 initial_r = np.zeros(2)
 initial_b = np.zeros(2)
-initial_v = np.zeros(2)
+initial_v = np.array([vpop_1,vpop_2])
 initial = np.column_stack([initial_s,initial_i,initial_r,initial_b,initial_v])
-points = taylor_system_14(SSPE,initial,0,10,100)
+points = taylor_system_14(SSPE,initial,0,24,240)
 t = points[0,:]
 s_1 = points[1,:]
 s_2 = points[2,:]
@@ -65,15 +71,15 @@ b_1 = points[7,:]
 v_1 = points[8,:]
 
 plt.figure(figsize=(13,8))
-plt.plot(t,s_1, label='Children < 5')
-plt.plot(t,s_2, label='Everyone Else')
+plt.plot(t,s_1, label='Susceptible Children < 5')
+plt.plot(t,s_2, label='Susceptible Everyone Else')
 plt.plot(t,i_1, label='Infected Children < 5')
 plt.plot(t,i_2, label='Infected Everyone Else')
 plt.plot(t,r_1, label='Recovered Children < 5')
 plt.plot(t,r_2, label='Recovered Everyone Else')
 plt.plot(t,b_1, label='SSPE Incidence')
-plt.plot(t,v_1, label='Vaccinated population')
-plt.xlabel('Time')
+#plt.plot(t,v_1, label='Vaccinated population')
+plt.xlabel('Time (days)')
 plt.ylabel('Percentage')
 plt.title(rf"First order approx {'\n'} $\beta$ = {beta} {'\n'} $\gamma$ = {gamma} {'\n'} sspe_rate = {np.round(delta[0],3)} Vaccination rate {nu}")
 plt.grid()
@@ -86,18 +92,19 @@ plt.close()
 
 fig, ax = plt.subplots(2,2,figsize=(13,8))
 ax[0,0].plot(t,b_1, label='SSPE Incidence Children < 5')
-ax[0,0].set_xlabel('Time')
+ax[0,0].set_xlabel('Time (days)')
 ax[0,0].set_ylabel('Percentage')
 ax[0,0].set_title(f"SSPE Incidence \n sspe_rate = {np.round(delta[0],3)} vaccination_rate {nu}")
 ax[0,0].grid()
 ax[0,0].legend()
 ax[0,1].plot(t,r_1, label='Recovered Children < 5')
-ax[0,1].set_xlabel('Time')
+ax[0,1].plot(t,r_2, label='Recovered People > 5')
+ax[0,1].set_xlabel('Time (days)')
 ax[0,1].set_ylabel('Percentage')
 ax[0,1].grid()
 ax[0,1].set_title(f'Recovered population over time rate')
 ax[1,1].plot(t,v_1, label='Vaccinated Population')
-ax[1,1].set_xlabel('Time')
+ax[1,1].set_xlabel('Time (days)')
 ax[1,1].set_ylabel('Percentage')
 ax[1,1].grid()
 ax[1,1].set_title(rf'Vaccinated population over time rate = $\nu$ {nu}')
