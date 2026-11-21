@@ -36,7 +36,7 @@ J = F.jacobian(y_sym)
 ### Equilibria
 eqs = sp.solve(F,(s_sym,i_sym),dict=True)
 #sp.pprint(sp.simplify(eqs[1][s_sym]))
-error = sp.Abs(J)
+error = sp.Abs(sp.simplify(J*F))
 #sp.pprint(J.row)
 #sp.pprint(F)
 

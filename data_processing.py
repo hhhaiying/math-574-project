@@ -47,4 +47,3 @@ def make_vaccine_csv():
     data.to_csv("data/alberta_measles_doses_2025.csv", index=False)
 
 
-print(give_nu())
