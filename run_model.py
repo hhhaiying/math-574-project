@@ -44,14 +44,13 @@ def taylor_system_14(f,initial,t0,t1,n):
 beta = np.array([[1.7280,6.686],[0.3688,9.9163]])
 beta = beta.flatten()
 gamma = np.array([1/8,1/8])
-#delta = np.random.uniform(0,0.05)
-delta = 1 / 1336
+delta = (1 / 1336) * (1 / 8)
 delta = np.array([delta,0])
 nu_ = give_nu()
 pop_1,pop_2 = data_processing()
 vpop_1, vpop_2 = 0.72*pop_1,0.91*pop_2
 infpop_1, infpop_2 = give_I()
-suspop_1,suspop_2 = pop_1 -infpop_1-vpop_1, pop_2-infpop_2-vpop_2
+suspop_1,suspop_2 = pop_1 - infpop_1 - vpop_1, pop_2 - infpop_2 - vpop_2
 nu = np.array([0.8*nu_/suspop_1,0.2*nu_/suspop_2])
 initial_s = np.array([suspop_1,suspop_2])
 initial_i = np.array([infpop_1,infpop_2])
@@ -59,6 +58,10 @@ initial_r = np.zeros(2)
 initial_b = np.zeros(2)
 initial_v = np.array([vpop_1,vpop_2])
 initial = np.column_stack([initial_s,initial_i,initial_r,initial_b,initial_v])
+params = {'beta': beta,'gamma' : gamma, 'delta' : delta, 'nu' : nu}
+initial_d = {'s_0' : initial_s, 'i_0' : initial_i, 'r_0': initial_r, 'b_0' : initial_b, 'v_0' : initial_v}
+print("Parameters",params)
+print('Initial Conds', initial_d)
 points = taylor_system_14(SSPE,initial,0,60,360)
 t = points[0,:]
 s_1 = points[1,:]
@@ -101,11 +104,13 @@ ax[0,1].plot(t,r_1, label='Recovered Children < 5')
 ax[0,1].plot(t,r_2, label='Recovered People > 5')
 ax[0,1].set_xlabel('Time (days)')
 ax[0,1].set_ylabel('Percentage')
+ax[0,1].legend()
 ax[0,1].grid()
 ax[0,1].set_title(f'Recovered population over time rate')
 ax[1,1].plot(t,v_1, label='Vaccinated Population')
 ax[1,1].set_xlabel('Time (days)')
 ax[1,1].set_ylabel('Percentage')
+ax[1,1].legend()
 ax[1,1].grid()
 ax[1,1].set_title(rf'Vaccinated population over time rate = $\nu$ {nu}')
 ax[1,0].set_visible(False)
