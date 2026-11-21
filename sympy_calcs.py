@@ -1,6 +1,6 @@
 import sympy as sp
-from data_processing import give_nu
-# Independent variable and positive parameters
+from data_processing import give_nu,give_birth
+# Independent variable and positive parameters 
 t = sp.symbols('t', real=True, nonnegative=True)
 h = sp.symbols('h',real=True,positive=True)
 b, beta, gamma, nu = sp.symbols('b beta gamma nu', positive=True)
@@ -39,19 +39,17 @@ eqs = sp.solve(F,(s_sym,i_sym),dict=True)
 error = sp.Abs(J)
 #sp.pprint(J.row)
 #sp.pprint(F)
+
+params = {
+    b: give_birth(),
+    beta: sp.Rational(9, 10),
+    gamma: sp.Rational(1, 8),
+    nu: give_nu(),
+}
+
 error_10 = error.subs({s_sym:1,i_sym:0})
 error_01 = error.subs({s_sym:0,i_sym:1})
-error_11 = error.subs({s_sym:1,i_sym:1})
-error_h = error.subs({s_sym:0.5,i_sym:0.5})
+error_h = error.subs({s_sym:sp.Rational(1,2),i_sym:sp.Rational(1,2)})
 error_p0 = error.subs({s_sym:eqs[0][s_sym],i_sym:0})
 error_pstar = error.subs({s_sym:eqs[1][s_sym],i_sym:eqs[1][i_sym]})
 
-new = give_nu()
-sp.pprint(error_10.norm(1).subs({b:1,beta:0.9,gamma:1/8,nu:new}))
-sp.pprint(error_10.norm(sp.oo).subs({b:1,beta:0.9,gamma:1/8,nu:new}))
-sp.pprint(error_10.norm(2).subs({b:1,beta:0.9,gamma:1/8,nu:new}))
-sp.pprint(error_p0.norm(1))
-sp.pprint(error_pstar.norm(1))
-sp.pprint(error_h.norm(1))
-#sp.pprint(sp.Max([sum(error.row(r)) for r in range(error.rows)])
-#sp.pprint(error_p0.norm(1))

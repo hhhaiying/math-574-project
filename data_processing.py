@@ -11,7 +11,7 @@ def data_processing():
     age_05 = data['Population'][0:2].sum()
     rest = total_pop- age_05
     age_05 /= total_pop
-    rest /= total_pop
+    rest /= total_pop 
     return age_05,rest
 
 def give_nu():
@@ -31,6 +31,12 @@ def give_I():
     i_1 /= total_pop
     i_2 /= total_pop
     return i_1,i_2
+
+def give_birth():
+    """
+    Return the birth rate per day per total population
+    """
+    return 53343/365/total_pop
 
 def make_vaccine_csv():
 
