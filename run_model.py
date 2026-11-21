@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from model import SSPE
-from data_processing import data_processing,give_I
+from data_processing import data_processing,give_I, give_nu
 
 
 def taylor_system_14(f,initial,t0,t1,n):
@@ -47,12 +47,12 @@ gamma = np.array([1/8,1/8])
 #delta = np.random.uniform(0,0.05)
 delta = 1 / 1336
 delta = np.array([delta,0])
-nu = (1/365)*np.array([.72,.91])
+nu_ = give_nu()
 pop_1,pop_2 = data_processing()
 vpop_1, vpop_2 = 0.72*pop_1,0.91*pop_2
 infpop_1, infpop_2 = give_I()
 suspop_1,suspop_2 = pop_1 -infpop_1-vpop_1, pop_2-infpop_2-vpop_2
-print(suspop_1,suspop_2)
+nu = np.array([0.8*nu_/suspop_1,0.2*nu_/suspop_2])
 initial_s = np.array([suspop_1,suspop_2])
 initial_i = np.array([infpop_1,infpop_2])
 initial_r = np.zeros(2)
@@ -111,7 +111,7 @@ ax[1,1].set_title(rf'Vaccinated population over time rate = $\nu$ {nu}')
 ax[1,0].set_visible(False)
 plt.legend()
 plt.tight_layout()
-fig.suptitle(rf"First order approx {'\n'} $\beta$ = {beta} {'\n'} $\gamma$ = {gamma} {'\n'} sspe_rate = {np.round(delta[0],3)} vaccination_rate {nu}")
+fig.suptitle(rf"First order approx {'\n'} $\beta$ = {beta} {'\n'} $\gamma$ = {gamma} {'\n'} sspe_rate = {np.round(delta[0],3)} vaccination_rate {np.round(nu,4)}")
 fig.tight_layout()
 plt.savefig(f'figures/SSPE_curves.jpg',dpi=200)
 plt.show()

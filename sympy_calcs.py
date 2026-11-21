@@ -46,7 +46,7 @@ error_h = error.subs({s_sym:0.5,i_sym:0.5})
 error_p0 = error.subs({s_sym:eqs[0][s_sym],i_sym:0})
 error_pstar = error.subs({s_sym:eqs[1][s_sym],i_sym:eqs[1][i_sym]})
 
-new = give_nu([0.72,0.91])
+new = give_nu()
 sp.pprint(error_10.norm(1).subs({b:1,beta:0.9,gamma:1/8,nu:new}))
 sp.pprint(error_10.norm(sp.oo).subs({b:1,beta:0.9,gamma:1/8,nu:new}))
 sp.pprint(error_10.norm(2).subs({b:1,beta:0.9,gamma:1/8,nu:new}))

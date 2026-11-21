@@ -14,13 +14,13 @@ def data_processing():
     rest /= total_pop
     return age_05,rest
 
-def give_nu(nu):
+def give_nu():
     """
-    Return an averaged nu from population data
+    Return an averaged nu from weekly vaccine data in units per day (not divided by susceptibles yet)
     """
-    pop_1,pop_2 = data_processing()
-    new = nu[0]*pop_1 + nu[1]*pop_2
-    return new
+    data = pd.read_csv("data/alberta_measles_doses_2025.csv")
+    avg = data['doses_administered'].mean()
+    return (avg/7)/total_pop
 
 def give_I():
     """
@@ -32,3 +32,13 @@ def give_I():
     i_2 /= total_pop
     return i_1,i_2
 
+def make_vaccine_csv():
+
+    data = pd.DataFrame({
+        "week": range(1, 53),
+        "doses_administered": ""
+    })
+    data.to_csv("data/alberta_measles_doses_2025.csv", index=False)
+
+
+print(give_nu())
