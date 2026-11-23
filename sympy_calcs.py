@@ -1,5 +1,6 @@
+import numpy as np
 import sympy as sp
-from data_processing import give_nu,give_birth
+from data_processing import give_nu,give_birth,give_params_2
 # Independent variable and positive parameters 
 t = sp.symbols('t', real=True, nonnegative=True)
 h = sp.symbols('h',real=True,positive=True)
@@ -22,6 +23,7 @@ f = sp.Matrix([
      b*(1-s-i)-beta*s*i-nu*s,
      beta*s*i - gamma*i
 ])
+
 
 y = sp.Matrix([s,i])
 # Display system
@@ -54,8 +56,13 @@ error_p0 = error.subs({s_sym:eqs[0][s_sym],i_sym:0})
 error_pstar = error.subs({s_sym:eqs[1][s_sym],i_sym:eqs[1][i_sym]})
 sp.pprint(params)
 
-R_0 = (beta/gamma)*(b/(b+nu))
+R_09 = (beta/gamma)*(b/(b+nu))
+R_0 = ((18*b/(b+nu)).subs(params))
+#sp.pprint(R_0)
 #print("nu")
 #sp.pprint(nu.subs(params))
 #print("R_0")
 #sp.pprint(R_0.subs(params))
+
+
+
