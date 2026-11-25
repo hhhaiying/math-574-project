@@ -9,7 +9,7 @@ print(f"  infected: children {inf[0] / (n[0] * N):.1%}, older {inf[1] / (n[1] * 
 
 # Vaccination scenarios 
 print("\nCoverage (under 5, 5+) | R_e | child infections | SSPE")
-for cov1, cov2 in [(0.72, 0.91), (0.95, 0.95), (0.72, 0.95), (0, 0), (0.5, 0.5)]:
+for cov1, cov2 in [(0.72, 0.91), (0.72, 0.94), (0, 0), (0.5, 0.5)]:
     R_e, inf, sspe = simulate(cov1, cov2)
     print(f"({cov1:.0%}, {cov2:.0%}) | {R_e:.2f} | {inf[0]:,.0f} | {sspe:.1f}")
 
