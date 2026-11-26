@@ -54,7 +54,7 @@ def give_params_2():
     beta = np.array([[1.7280,6.686],[0.3688,9.9163]])
     beta = beta.flatten()
     gamma = np.array([1/8,1/8])
-    delta = (1 / 1336) * (1 / 8)
+    delta = (1 / 1337) * (1 / 8)
     delta = np.array([delta,0])
     nu_ = give_nu()
     pop_1,pop_2 = data_processing()

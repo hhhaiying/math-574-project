@@ -1,6 +1,6 @@
 import numpy as np
 import sympy as sp
-from data_processing import give_nu,give_birth,give_params_2
+from data_processing import data_processing, give_nu,give_birth,give_params_2
 
 # Independent variable and positive parameters 
 t = sp.symbols('t', real=True, nonnegative=True)
@@ -85,7 +85,9 @@ for func in funcs:
 h = 60 / 360
 error_jf = sp.simplify(J*F)
 error_jf_pstar = error_jf.subs({s_sym:(eqs[1][s_sym]).subs(params),i_sym:(eqs[1][i_sym]).subs(params)} | params)
+error_jf_p0 = error_jf.subs({s_sym:(eqs[0][s_sym]).subs(params),i_sym:(eqs[0][i_sym]).subs(params)} | params)
 jf_star = sp.matrix2numpy(error_jf_pstar,dtype=float)
+jf_0 = sp.matrix2numpy(error_jf_p0,dtype=float)
 jf_10 = sp.matrix2numpy(error_jf.subs({s_sym:1,i_sym:0} | params),dtype=float)
 jf_01 = sp.matrix2numpy(error_jf.subs({s_sym:0,i_sym:1} | params),dtype=float)
 jf_h = sp.matrix2numpy(error_jf.subs({s_sym:0.5,i_sym:0.5} | params),dtype=float)
@@ -93,7 +95,9 @@ jf_h = sp.matrix2numpy(error_jf.subs({s_sym:0.5,i_sym:0.5} | params),dtype=float
 
 error = sp.simplify(J)
 error_pstar = error.subs({s_sym:(eqs[1][s_sym]).subs(params),i_sym:(eqs[1][i_sym]).subs(params)} | params)
+error_p0 = error.subs({s_sym:(eqs[0][s_sym]).subs(params),i_sym:0} | params)
 J_star = sp.matrix2numpy(error_pstar,dtype=float)
+J_0 = sp.matrix2numpy(error_p0,dtype=float)
 J_10 = sp.matrix2numpy(J.subs({s_sym:1,i_sym:0} | params),dtype=float)
 J_01 = sp.matrix2numpy(J.subs({s_sym:0,i_sym:1} | params),dtype=float)
 J_h = sp.matrix2numpy(J.subs({s_sym:0.5,i_sym:0.5} | params),dtype=float)
@@ -102,6 +106,7 @@ print("J_10", np.linalg.cond(J_10),0.5*h**2*np.linalg.norm(jf_10,np.inf))
 print("J_01", np.linalg.cond(J_01),0.5*h**2*np.linalg.norm(jf_01,np.inf))
 print("J_h", np.linalg.cond(J_h),0.5*h**2*np.linalg.norm(jf_h,np.inf))
 print("J_star", np.linalg.cond(J_star), 0.5*h**2*np.linalg.norm(jf_star,np.inf))
+print("J_0", np.linalg.cond(J_star), 0.5*h**2*np.linalg.norm(jf_star,np.inf))
 
 ### for the LTE
 
@@ -110,6 +115,5 @@ print("J_star", np.linalg.cond(J_star), 0.5*h**2*np.linalg.norm(jf_star,np.inf))
 #sp.pprint(nu.subs(params))
 #print("R_0")
 #sp.pprint(R_0.subs(params))
-
 
 
